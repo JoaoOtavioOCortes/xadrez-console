@@ -13,8 +13,14 @@
         public Board(int lines, int columns)
         {
             Lines = lines;
-            Columns = columns;
+            Columns = columns;  
             Pieces = new Piece[Lines, Columns];
+        }
+
+
+       public Piece piece(int line, int column)
+        {
+            return Pieces[line, column];
         }
     }
 }
