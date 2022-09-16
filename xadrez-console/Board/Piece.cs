@@ -18,5 +18,10 @@
             QntdMoves = 0;
             Board = board;
         }
+
+        public void QntdMovesIncrement()
+        {
+            QntdMoves++;
+        }
     }
 }

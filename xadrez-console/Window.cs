@@ -1,4 +1,5 @@
 ﻿using board;
+using Xadrez;
 
 namespace board
 {
@@ -34,6 +35,15 @@ namespace board
             Console.WriteLine("a b c d e f g h");
             Console.BackgroundColor = aux;
         }
+
+
+        public static XadrezPosition ReadXadrezPosition()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+            return new XadrezPosition(column, line);
+        } 
 
         public static void PiecePrint(Piece piece)
         {

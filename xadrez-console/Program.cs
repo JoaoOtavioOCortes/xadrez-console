@@ -4,15 +4,27 @@ using Xadrez;
 try
 {
 
-    Board board = new Board(8, 8);
+    XadrezMatch match = new XadrezMatch();
 
-    board.PutPiece(new Tower(Color.Black, board), new Position(0, 0));
-    board.PutPiece(new Tower(Color.White, board), new Position(1, 3));
-    board.PutPiece(new King(Color.Black, board), new Position(0, 2));
+    while(!match.Finished)
+    {
+        Console.Clear();
+        Window.PrintOutBoard(match.Board);
+
+        Console.WriteLine("");
+        Console.Write("Origem: ");
+        Position origin = Window.ReadXadrezPosition().ToPosition();
+        Console.Write("Destino: ");
+        Position destiny = Window.ReadXadrezPosition().ToPosition();
+
+        match.RunMoviment(origin, destiny);
+    }
 
 
 
-    Window.PrintOutBoard(board);
+
+
+    Window.PrintOutBoard(match.Board);
 }
 catch (ExceptionBoard e)
 {
