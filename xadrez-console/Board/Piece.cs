@@ -24,6 +24,27 @@
             QntdMoves++;
         }
 
+        public bool ThereRPossibleMoves()
+        {
+            bool[,] mat = PossibleMoviments();
+            for (int i=0; i<Board.Lines; i++)
+            {
+                for(int j=0; j<Board.Columns; j++)
+                {
+                    if (mat[i,j] == true)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveTo(Position pos)
+        {
+            return PossibleMoviments()[pos.Line, pos.Column];
+        }
+
         public abstract bool[,] PossibleMoviments();
     }
 }

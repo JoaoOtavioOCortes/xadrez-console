@@ -6,29 +6,40 @@ try
 
     XadrezMatch match = new XadrezMatch();
 
-    while(!match.Finished)
+    while (!match.Finished)
     {
-        Console.Clear();
-        Window.PrintOutBoard(match.Board);
 
-        Console.WriteLine("");
-        Console.Write("Origem: ");
-        Position origin = Window.ReadXadrezPosition().ToPosition();
+        try
+        {
+            Console.Clear();
+            Window.PrintOutBoard(match.Board);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + match.Turn);
+            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
 
-        bool[,] possiblePosition = match.Board.piece(origin).PossibleMoviments(); 
+            Console.WriteLine("");
+            Console.Write("Origem: ");
+            Position origin = Window.ReadXadrezPosition().ToPosition();
+            match.ValidateOriginPosition(origin);
 
-        Console.Clear();
-        Window.PrintOutBoard(match.Board, possiblePosition);
+            bool[,] possiblePosition = match.Board.piece(origin).PossibleMoviments();
 
-        Console.WriteLine("");
-        Console.Write("Destino: ");
-        Position destiny = Window.ReadXadrezPosition().ToPosition();
+            Console.Clear();
+            Window.PrintOutBoard(match.Board, possiblePosition);
 
-        match.RunMoviment(origin, destiny);
+            Console.WriteLine("");
+            Console.Write("Destino: ");
+            Position destiny = Window.ReadXadrezPosition().ToPosition();
+            match.ValidateDestinyPosition(origin, destiny);
+
+            match.MakesMove(origin, destiny);
+        }
+        catch(ExceptionBoard e)
+        {
+            Console.WriteLine(e.Message);
+            Console.ReadLine();
+        }
     }
-
-
-
 
 
     Window.PrintOutBoard(match.Board);

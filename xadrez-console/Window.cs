@@ -78,7 +78,7 @@ namespace board
             }
             else
             {
-                if (piece.Color == Color.White)
+                if (piece.Color == Color.Branco)
                 {
                     Console.Write(piece);
                 }

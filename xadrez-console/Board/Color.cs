@@ -2,12 +2,12 @@
 {
     enum Color
     {
-        White,
-        Black,
-        Yellow,
-        Blue,
-        Red,
-        Green,
-        Orange
+        Branco,
+        Preto,
+        Amarelo,
+        Azul,
+        Vermelho,
+        Verde,
+        Laranja
     }
 }
