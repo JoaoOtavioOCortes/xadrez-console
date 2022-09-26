@@ -5,6 +5,42 @@ namespace board
 {
     internal class Window
     {
+
+        public static void PrintMatch(XadrezMatch match)
+        {
+            PrintOutBoard(match.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + match.Turn);
+            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+        }
+
+        public static void PrintCapturedPieces(XadrezMatch match)
+        {
+            Console.WriteLine("Peças capturadas");
+            Console.Write("Brancas: ");
+            PrintSet(match.CapturedPieces(Color.Branco));
+            Console.WriteLine();
+            Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintSet(match.CapturedPieces(Color.Preto));
+            Console.ForegroundColor = aux; 
+            Console.WriteLine();
+            
+        }
+
+        public static void PrintSet(HashSet<Piece> set)
+        {
+            Console.Write("[");
+            foreach(Piece x in set)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+
+        } 
         public static void PrintOutBoard(Board board)
         {
             for(int i=0; i<board.Lines; i++)

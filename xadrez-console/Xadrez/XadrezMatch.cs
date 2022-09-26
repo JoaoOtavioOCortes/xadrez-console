@@ -8,13 +8,16 @@ namespace Xadrez
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
-
+        private HashSet<Piece> Pieces;
+        private HashSet<Piece> Captured;
         public XadrezMatch()
         {
             Board = new Board(8, 8);
             Turn = 1;
             CurrentPlayer = Color.Branco;
             Finished = false;
+            Pieces = new HashSet<Piece>();
+            Captured = new HashSet<Piece>();
             PuttingAllPieces();
             
         }
@@ -25,6 +28,10 @@ namespace Xadrez
             p.QntdMovesIncrement();
             Piece CapturedPiece = Board.RemovePiece(destiny);
             Board.PutPiece(p, destiny);
+            if(CapturedPiece != null)
+            {
+                Captured.Add(CapturedPiece);
+            }
         }
 
         public void MakesMove(Position origin, Position destiny) 
@@ -70,22 +77,54 @@ namespace Xadrez
             }
         }
 
+        public HashSet<Piece> CapturedPieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach(Piece x in Captured)
+            {
+                if(x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux; 
+        }
+
+        public HashSet<Piece> PiecesInGame(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach(Piece x in Pieces)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(CapturedPieces(color));
+            return aux;
+        }
+
+        public void PuttingNewPiece(char column, int line, Piece piece) 
+        {
+            Board.PutPiece(piece, new XadrezPosition(column, line).ToPosition());
+            Pieces.Add(piece);
+        }
+
         private void PuttingAllPieces()
         {
-            Board.PutPiece(new Tower(Color.Branco, Board), new XadrezPosition('c',1).ToPosition());
-            Board.PutPiece(new Tower(Color.Branco, Board), new XadrezPosition('c', 2).ToPosition());
-            Board.PutPiece(new Tower(Color.Branco, Board), new XadrezPosition('d', 2).ToPosition());
-            Board.PutPiece(new Tower(Color.Branco, Board), new XadrezPosition('e', 2).ToPosition());
-            Board.PutPiece(new Tower(Color.Branco, Board), new XadrezPosition('e', 1).ToPosition());
-            Board.PutPiece(new King(Color.Branco, Board), new XadrezPosition('d', 1).ToPosition());
+            PuttingNewPiece('c', 1, new Tower(Color.Branco, Board));
+            PuttingNewPiece('c', 2, new Tower(Color.Branco, Board));
+            PuttingNewPiece('d', 2, new Tower(Color.Branco, Board));
+            PuttingNewPiece('e', 2, new Tower(Color.Branco, Board));
+            PuttingNewPiece('e', 1, new Tower(Color.Branco, Board));
+            PuttingNewPiece('d', 1, new King(Color.Branco, Board));
 
-            Board.PutPiece(new Tower(Color.Preto, Board), new XadrezPosition('c', 7).ToPosition());
-            Board.PutPiece(new Tower(Color.Preto, Board), new XadrezPosition('c', 8).ToPosition());
-            Board.PutPiece(new Tower(Color.Preto, Board), new XadrezPosition('d', 7).ToPosition());
-            Board.PutPiece(new Tower(Color.Preto, Board), new XadrezPosition('e', 7).ToPosition());
-            Board.PutPiece(new Tower(Color.Preto, Board), new XadrezPosition('e', 8).ToPosition());
-            Board.PutPiece(new King(Color.Preto, Board), new XadrezPosition('d', 8).ToPosition());
-
+            PuttingNewPiece('c', 7, new Tower(Color.Preto, Board));
+            PuttingNewPiece('c', 8, new Tower(Color.Preto, Board));
+            PuttingNewPiece('d', 7, new Tower(Color.Preto, Board));
+            PuttingNewPiece('e', 7, new Tower(Color.Preto, Board));
+            PuttingNewPiece('e', 8, new Tower(Color.Preto, Board));
+            PuttingNewPiece('d', 8, new King(Color.Preto, Board));
 
         }
     }

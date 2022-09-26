@@ -12,10 +12,7 @@ try
         try
         {
             Console.Clear();
-            Window.PrintOutBoard(match.Board);
-            Console.WriteLine();
-            Console.WriteLine("Turno: " + match.Turn);
-            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+            Window.PrintMatch(match);
 
             Console.WriteLine("");
             Console.Write("Origem: ");
