@@ -13,10 +13,25 @@ namespace board
             PrintCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.Turn);
-            Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
-            if (match.Check)
+            if (!match.Finished)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+                if (match.Check)
+                {
+                    Console.WriteLine();
+                    ConsoleColor aux = Console.BackgroundColor;
+                    Console.BackgroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("XEQUE!");
+                    Console.BackgroundColor = aux;
+                }
+            }
+            else
+            {
+                ConsoleColor aux = Console.BackgroundColor;
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + match.CurrentPlayer);
+                Console.BackgroundColor = aux;
             }
         }
 
