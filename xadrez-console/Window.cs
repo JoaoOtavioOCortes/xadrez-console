@@ -14,6 +14,10 @@ namespace board
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.Turn);
             Console.WriteLine("Aguardando jogada: " + match.CurrentPlayer);
+            if (match.Check)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
 
         public static void PrintCapturedPieces(XadrezMatch match)

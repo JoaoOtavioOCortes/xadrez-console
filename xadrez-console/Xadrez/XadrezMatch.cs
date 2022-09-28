@@ -10,6 +10,8 @@ namespace Xadrez
         public bool Finished { get; private set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
+        public bool Check { get; private set; }
+        
         public XadrezMatch()
         {
             Board = new Board(8, 8);
@@ -22,21 +24,50 @@ namespace Xadrez
             
         }
 
-        private void RunMoviment(Position origin, Position destiny)
+        private Piece RunMoviment(Position origin, Position destiny)
         {
             Piece p = Board.RemovePiece(origin);
             p.QntdMovesIncrement();
-            Piece CapturedPiece = Board.RemovePiece(destiny);
+            Piece capturedPiece = Board.RemovePiece(destiny);
             Board.PutPiece(p, destiny);
-            if(CapturedPiece != null)
+            if(capturedPiece != null)
             {
-                Captured.Add(CapturedPiece);
+                Captured.Add(capturedPiece);
             }
+            return capturedPiece;
+        }
+
+        public void UndoMove(Position origin, Position destiny, Piece capturedPiece)
+        {
+            Piece p = Board.RemovePiece(destiny);
+            p.QntdMovesdecrement();
+            if (capturedPiece != null)
+            {
+                Board.PutPiece(capturedPiece, destiny);
+                Captured.Remove(capturedPiece);
+            }
+            Board.PutPiece(p, origin);
         }
 
         public void MakesMove(Position origin, Position destiny) 
         {
-            RunMoviment(origin, destiny);
+            Piece capturedPiece = RunMoviment(origin, destiny);
+
+            if (InCheck(CurrentPlayer))
+            {
+                UndoMove(origin, destiny, capturedPiece);
+                throw new ExceptionBoard("Você não pode se colocar em xeque!");
+            }
+
+            if (InCheck(Adversary(CurrentPlayer)))
+            {
+                Check = true;
+            }
+            else 
+            {
+                Check = false;
+            }
+
             Turn++;
             ChangePlayer();
         }
@@ -102,6 +133,49 @@ namespace Xadrez
             }
             aux.ExceptWith(CapturedPieces(color));
             return aux;
+        }
+
+        private Color Adversary(Color color)
+        {
+            if (color == Color.Branco)
+            {
+                return Color.Preto;
+            }
+            else
+            {
+                return Color.Branco;
+            } 
+        }
+
+        private Piece King(Color color)
+        {
+            foreach(Piece x in PiecesInGame(color))
+            {
+                if (x is King)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool InCheck(Color color)
+        {
+            Piece K = King(color);
+            if(K == null)
+            {
+                throw new ExceptionBoard("Não tem rei da cor " + color + " no tabuleiro!");
+            }
+
+            foreach(Piece x in PiecesInGame(Adversary(color)))
+            {
+                bool[,] mat = x.PossibleMoviments();
+                if (mat[K.Position.Line, K.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void PuttingNewPiece(char column, int line, Piece piece) 

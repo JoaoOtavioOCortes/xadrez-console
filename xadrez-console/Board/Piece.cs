@@ -24,6 +24,11 @@
             QntdMoves++;
         }
 
+        public void QntdMovesdecrement()
+        {
+            QntdMoves--;
+        }
+
         public bool ThereRPossibleMoves()
         {
             bool[,] mat = PossibleMoviments();
