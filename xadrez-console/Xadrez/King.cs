@@ -21,7 +21,7 @@ namespace Xadrez
             return p == null || p.Color != Color;
         }
         
-        public override bool[,] PossibleMoviments()
+        public override bool[,] PossibleMovements()
         {
             bool[,] mat = new bool[Board.Lines, Board.Columns];
 

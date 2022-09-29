@@ -19,7 +19,7 @@ try
             Position origin = Window.ReadXadrezPosition().ToPosition();
             match.ValidateOriginPosition(origin);
 
-            bool[,] possiblePosition = match.Board.piece(origin).PossibleMoviments();
+            bool[,] possiblePosition = match.Board.piece(origin).PossibleMovements();
 
             Console.Clear();
             Window.PrintOutBoard(match.Board, possiblePosition);

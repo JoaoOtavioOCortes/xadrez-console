@@ -98,7 +98,7 @@ namespace Xadrez
 
         public void ValidateDestinyPosition(Position origin, Position destiny)
         {
-            if (!Board.piece(origin).CanMoveTo(destiny))
+            if (!Board.piece(origin).PossibleMoves(destiny))
             {
                 throw new ExceptionBoard("Posição de destino inválida!");
             }
@@ -177,7 +177,7 @@ namespace Xadrez
 
             foreach(Piece x in PiecesInGame(Adversary(color)))
             {
-                bool[,] mat = x.PossibleMoviments();
+                bool[,] mat = x.PossibleMovements();
                 if (mat[K.Position.Line, K.Position.Column])
                 {
                     return true;
@@ -195,7 +195,7 @@ namespace Xadrez
 
             foreach(Piece x in PiecesInGame(color))
             {
-                bool[,] mat = x.PossibleMoviments();
+                bool[,] mat = x.PossibleMovements();
                 for (int i=0; i<Board.Lines; i++)
                 {
                     for(int j=0; j<Board.Columns; j++)

@@ -31,7 +31,7 @@
 
         public bool ThereRPossibleMoves()
         {
-            bool[,] mat = PossibleMoviments();
+            bool[,] mat = PossibleMovements();
             for (int i=0; i<Board.Lines; i++)
             {
                 for(int j=0; j<Board.Columns; j++)
@@ -45,11 +45,11 @@
             return false;
         }
 
-        public bool CanMoveTo(Position pos)
+        public bool PossibleMoves(Position pos)
         {
-            return PossibleMoviments()[pos.Line, pos.Column];
+            return PossibleMovements()[pos.Line, pos.Column];
         }
 
-        public abstract bool[,] PossibleMoviments();
+        public abstract bool[,] PossibleMovements();
     }
 }
