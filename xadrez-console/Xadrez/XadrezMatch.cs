@@ -82,15 +82,15 @@ namespace Xadrez
 
         public void ValidateOriginPosition(Position pos)
         {
-            if (Board.piece(pos) == null)
+            if (Board.Piece(pos) == null)
             {
                 throw new ExceptionBoard("Não existe peça na posição de origem escolhida");
             }
-            if (CurrentPlayer != Board.piece(pos).Color)
+            if (CurrentPlayer != Board.Piece(pos).Color)
             {
                 throw new ExceptionBoard("A peça de origem escolhida não é sua!");
             }
-            if (!Board.piece(pos).ThereRPossibleMoves())
+            if (!Board.Piece(pos).ThereRPossibleMoves())
             {
                 throw new ExceptionBoard("Não há movimentos possíveis para  a peça de origem escolhida!");
             }
@@ -98,7 +98,7 @@ namespace Xadrez
 
         public void ValidateDestinyPosition(Position origin, Position destiny)
         {
-            if (!Board.piece(origin).PossibleMoves(destiny))
+            if (!Board.Piece(origin).PossibleMoves(destiny))
             {
                 throw new ExceptionBoard("Posição de destino inválida!");
             }

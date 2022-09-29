@@ -1,18 +1,17 @@
 ﻿using board;
 
-namespace Xadrez
+namespace xadrez
 {
-    internal class Tower : Piece  
+    internal class Bishop : Piece
     {
-        public Tower(Color color, Board board) : base(color, board)
+        public Bishop(Color color, Board board) : base(color, board)
         {
         }
 
         public override string ToString()
         {
-            return "T";
+            return "B";
         }
-
 
         private bool CanMove(Position pos)
         {
@@ -26,31 +25,20 @@ namespace Xadrez
 
             Position pos = new Position(0, 0);
 
-            //above
-            pos.ValuesDefinition(Position.Line - 1, Position.Column);
-            while(Board.ValidPosition(pos) && CanMove(pos))
-            {
-                mat[pos.Line, pos.Column] = true;
-                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.Line = pos.Line - 1;
-            }
-            //below
-            pos.ValuesDefinition(Position.Line + 1, Position.Column);
+            //NO
+            pos.ValuesDefinition(Position.Line - 1, Position.Column - 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
-                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
+                if(Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
+                pos.ValuesDefinition(pos.Line - 1, pos.Column - 1);
             }
 
-            //right
-            pos.ValuesDefinition(Position.Line, Position.Column + 1);
+            //NE
+            pos.ValuesDefinition(Position.Line - 1, Position.Column + 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
@@ -58,10 +46,11 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.Column = pos.Column +1;
+                pos.ValuesDefinition(pos.Line - 1, pos.Column + 1);
             }
-            //left
-            pos.ValuesDefinition(Position.Line, Position.Column - 1);
+
+            //SE
+            pos.ValuesDefinition(Position.Line + 1, Position.Column + 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
@@ -69,15 +58,22 @@ namespace Xadrez
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.ValuesDefinition(pos.Line + 1, pos.Column + 1);
             }
+
+            //SO
+            pos.ValuesDefinition(Position.Line + 1, Position.Column - 1);
+            while (Board.ValidPosition(pos) && CanMove(pos))
+            {
+                mat[pos.Line, pos.Column] = true;
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.ValuesDefinition(pos.Line + 1, pos.Column - 1);
+            }
+
             return mat;
-
         }
-
-
-
-
-
     }
 }

@@ -17,13 +17,13 @@
             Pieces = new Piece[Lines, Columns];
         }
 
-       public Piece piece(int line, int column)
+       public Piece Piece(int line, int column)
         {
             return Pieces[line, column];
         }
 
 
-        public Piece piece(Position pos)
+        public Piece Piece(Position pos)
         {
             return Pieces[pos.Line, pos.Column];
         }
@@ -31,7 +31,7 @@
         public bool PieceExistence(Position pos)
         {
             ValidatePosition(pos);
-            return piece(pos) != null;
+            return Piece(pos) != null;
         }
 
 
@@ -49,11 +49,11 @@
 
         public Piece RemovePiece(Position pos)
         {
-            if (piece(pos) == null)
+            if (Piece(pos) == null)
             {
                 return null;
             }
-            Piece aux = piece(pos);
+            Piece aux = Piece(pos);
             aux.Position = null;
             Pieces[pos.Line, pos.Column] = null;
             return aux;

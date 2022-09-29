@@ -71,7 +71,7 @@ namespace board
 
                 for(int j=0; j<board.Columns; j++)
                 {
-                 PiecePrint(board.piece(i, j));       
+                 PiecePrint(board.Piece(i, j));       
                 }
                 Console.WriteLine();
             }
@@ -104,7 +104,7 @@ namespace board
                     {
                         Console.BackgroundColor = originalBackGround;
                     }
-                    PiecePrint(board.piece(i, j));
+                    PiecePrint(board.Piece(i, j));
                 }
                 Console.WriteLine();
             }

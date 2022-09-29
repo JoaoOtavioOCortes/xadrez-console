@@ -1,18 +1,16 @@
 ﻿using board;
 
-namespace Xadrez
+namespace xadrez
 {
-     class King : Piece 
+    internal class Horse : Piece
     {
-
-        public King(Color color, Board board) : base(color, board)
+        public Horse(Color color, Board board) : base(color, board)
         {
         }
 
-
         public override string ToString()
         {
-            return "R";
+            return "C";
         }
 
         private bool CanMove(Position pos)
@@ -20,65 +18,55 @@ namespace Xadrez
             Piece p = Board.Piece(pos);
             return p == null || p.Color != Color;
         }
-        
+
         public override bool[,] PossibleMovements()
         {
             bool[,] mat = new bool[Board.Lines, Board.Columns];
 
             Position pos = new Position(0, 0);
 
-            //above
-            pos.ValuesDefinition(Position.Line - 1, Position.Column);
+            pos.ValuesDefinition(Position.Line - 1, Position.Column - 2);
             if(Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //north east
-            pos.ValuesDefinition(Position.Line - 1, Position.Column +1);
+            pos.ValuesDefinition(Position.Line - 2, Position.Column - 1);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //right
-            pos.ValuesDefinition(Position.Line, Position.Column + 1);
+            pos.ValuesDefinition(Position.Line - 2, Position.Column + 1);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //south east
-            pos.ValuesDefinition(Position.Line + 1, Position.Column + 1);
+            pos.ValuesDefinition(Position.Line - 1, Position.Column + 2);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //below
-            pos.ValuesDefinition(Position.Line + 1, Position.Column);
+            pos.ValuesDefinition(Position.Line + 1, Position.Column + 2);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //south west
-            pos.ValuesDefinition(Position.Line + 1, Position.Column - 1);
+            pos.ValuesDefinition(Position.Line +2, Position.Column +1);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //left
-            pos.ValuesDefinition(Position.Line, Position.Column -1);
+            pos.ValuesDefinition(Position.Line +2, Position.Column - 1);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
-            //north west
-            pos.ValuesDefinition(Position.Line - 1, Position.Column - 1);
+            pos.ValuesDefinition(Position.Line + 1, Position.Column - 2);
             if (Board.ValidPosition(pos) && CanMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
             }
+
             return mat;
-
         }
-
-
     }
 }
