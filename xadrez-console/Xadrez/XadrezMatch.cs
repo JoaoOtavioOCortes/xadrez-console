@@ -34,6 +34,26 @@ namespace Xadrez
             {
                 Captured.Add(capturedPiece);
             }
+
+            //#SpecialPlay roque pequeno
+            if(p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 1);
+                Piece T = Board.RemovePiece(originT);
+                T.QntdMovesIncrement();
+                Board.PutPiece(T, destinyT);
+            }
+            //#SpecialPlay roque grande
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column - 4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+                Piece T = Board.RemovePiece(originT);
+                T.QntdMovesIncrement();
+                Board.PutPiece(T, destinyT);
+            }
+
             return capturedPiece;
         }
 
@@ -47,6 +67,25 @@ namespace Xadrez
                 Captured.Remove(capturedPiece);
             }
             Board.PutPiece(p, origin);
+
+            //#SpecialPlay roque pequeno
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 1);
+                Piece T = Board.RemovePiece(destinyT);
+                T.QntdMovesdecrement();
+                Board.PutPiece(T, originT);
+            }
+            //#SpecialPlay roque grande
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column -4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+                Piece T = Board.RemovePiece(destinyT);
+                T.QntdMovesdecrement();
+                Board.PutPiece(T, originT);
+            }
         }
 
         public void MakesMove(Position origin, Position destiny) 
@@ -231,14 +270,14 @@ namespace Xadrez
             PuttingNewPiece('d', 2, new Tower(Color.Branco, Board));
             PuttingNewPiece('e', 2, new Tower(Color.Branco, Board));
             PuttingNewPiece('e', 1, new Tower(Color.Branco, Board));
-            PuttingNewPiece('d', 1, new King(Color.Branco, Board));
+            PuttingNewPiece('d', 1, new King(Color.Branco, Board, this));
 
             PuttingNewPiece('c', 7, new Tower(Color.Preto, Board));
             PuttingNewPiece('c', 8, new Tower(Color.Preto, Board));
             PuttingNewPiece('d', 7, new Tower(Color.Preto, Board));
             PuttingNewPiece('e', 7, new Tower(Color.Preto, Board));
             PuttingNewPiece('e', 8, new Tower(Color.Preto, Board));
-            PuttingNewPiece('d', 8, new King(Color.Preto, Board));
+            PuttingNewPiece('d', 8, new King(Color.Preto, Board, this));
 
         }
     }
