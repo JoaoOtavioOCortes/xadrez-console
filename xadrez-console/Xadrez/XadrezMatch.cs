@@ -139,6 +139,21 @@ namespace Xadrez
                 throw new ExceptionBoard("Você não pode se colocar em xeque!");
             }
 
+            Piece p = Board.Piece(destiny);
+
+            // #SpecialPlay promocao
+            if (p is Pawn)
+            {
+                if (p.Color == Color.Branco && destiny.Line == 0 || p.Color == Color.Preto && destiny.Line == 7)
+                {
+                    p = Board.RemovePiece(destiny);
+                    Pieces.Remove(p);
+                    Piece queen = new Queen(p.Color, Board);
+                    Board.PutPiece(queen, destiny);
+                    Pieces.Add(queen);
+                }
+            }
+
             if (InCheck(Adversary(CurrentPlayer)))
             {
                 Check = true;
@@ -159,7 +174,6 @@ namespace Xadrez
                 ChangePlayer();
             }
 
-            Piece p = Board.Piece(destiny);
 
             //#SpecialPlay en passant
             if (p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
