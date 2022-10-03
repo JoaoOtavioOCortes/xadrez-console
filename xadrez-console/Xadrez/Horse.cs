@@ -1,8 +1,8 @@
 ﻿using board;
 
-namespace xadrez
+namespace Xadrez
 {
-    internal class Horse : Piece
+     class Horse : Piece
     {
         public Horse(Color color, Board board) : base(color, board)
         {

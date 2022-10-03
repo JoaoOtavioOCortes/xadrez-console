@@ -1,6 +1,6 @@
 ﻿using board;
 
-namespace xadrez
+namespace Xadrez
 {
     internal class Bishop : Piece
     {

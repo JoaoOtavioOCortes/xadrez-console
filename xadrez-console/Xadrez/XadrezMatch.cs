@@ -265,19 +265,39 @@ namespace Xadrez
 
         private void PuttingAllPieces()
         {
-            PuttingNewPiece('c', 1, new Tower(Color.Branco, Board));
-            PuttingNewPiece('c', 2, new Tower(Color.Branco, Board));
-            PuttingNewPiece('d', 2, new Tower(Color.Branco, Board));
-            PuttingNewPiece('e', 2, new Tower(Color.Branco, Board));
-            PuttingNewPiece('e', 1, new Tower(Color.Branco, Board));
-            PuttingNewPiece('d', 1, new King(Color.Branco, Board, this));
+            PuttingNewPiece('a', 1, new Tower(Color.Branco, Board));
+            PuttingNewPiece('b', 1, new Horse(Color.Branco, Board));
+            PuttingNewPiece('c', 1, new Bishop(Color.Branco, Board));
+            PuttingNewPiece('d', 1, new Queen(Color.Branco, Board));
+            PuttingNewPiece('e', 1, new King(Color.Branco, Board, this));
+            PuttingNewPiece('f', 1, new Bishop(Color.Branco, Board));
+            PuttingNewPiece('g', 1, new Horse(Color.Branco, Board));
+            PuttingNewPiece('h', 1, new Tower(Color.Branco, Board));
+            PuttingNewPiece('a', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('b', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('c', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('d', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('e', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('f', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('g', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('h', 2, new Pawn(Color.Branco, Board));
 
-            PuttingNewPiece('c', 7, new Tower(Color.Preto, Board));
-            PuttingNewPiece('c', 8, new Tower(Color.Preto, Board));
-            PuttingNewPiece('d', 7, new Tower(Color.Preto, Board));
-            PuttingNewPiece('e', 7, new Tower(Color.Preto, Board));
-            PuttingNewPiece('e', 8, new Tower(Color.Preto, Board));
-            PuttingNewPiece('d', 8, new King(Color.Preto, Board, this));
+            PuttingNewPiece('a', 8, new Tower(Color.Preto, Board));
+            PuttingNewPiece('b', 8, new Horse(Color.Preto, Board));
+            PuttingNewPiece('c', 8, new Bishop(Color.Preto, Board));
+            PuttingNewPiece('d', 8, new Queen(Color.Preto, Board));
+            PuttingNewPiece('e', 8, new King(Color.Preto, Board, this));
+            PuttingNewPiece('f', 8, new Bishop(Color.Preto, Board));
+            PuttingNewPiece('g', 8, new Horse(Color.Preto, Board));
+            PuttingNewPiece('h', 8, new Tower(Color.Preto, Board));
+            PuttingNewPiece('a', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('b', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('c', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('d', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('e', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('f', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('g', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('h', 7, new Pawn(Color.Preto, Board));
 
         }
     }

@@ -109,24 +109,11 @@ namespace Xadrez
                     Position p3 = new Position(Position.Line, Position.Column - 3);
                     if (Board.Piece(p1) == null && Board.Piece(p2) == null  && Board.Piece(p3) == null)
                     {
-                        mat[Position.Line, Position.Column - 2] = true;                // #SpecialPlay roque pequeno
-                        Position posT1 = new Position(Position.Line, Position.Column + 3);
-                        if (TowerTestToRoque(posT1))
-                        {
-                            Position p1 = new Position(Position.Line, Position.Column + 1);
-                            Position p2 = new Position(Position.Line, Position.Column + 2);
-                            if (Board.Piece(p1) == null && Board.Piece(p2) == null)
-                            {
-                                mat[Position.Line, Position.Column + 2] = true;
-                            }
-                        }
+                        mat[Position.Line, Position.Column - 2] = true;                
                     }
                 }
             }
-
-
             return mat;
-
         }
 
 
