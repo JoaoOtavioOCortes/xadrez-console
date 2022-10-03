@@ -4,8 +4,11 @@ namespace Xadrez
 {
     internal class Pawn : Piece
     {
-        public Pawn(Color color, Board board) : base(color, board)
+
+        private XadrezMatch Match;
+        public Pawn(Color color, Board board, XadrezMatch match) : base(color, board)
         {
+            Match = match;
         }
 
         public override string ToString()
@@ -54,6 +57,22 @@ namespace Xadrez
                     mat[pos.Line, pos.Column] = true;
                 }
             }
+
+            // #SpecialPlay en passant
+            if(Position.Line == 3)
+            {
+                Position left = new Position(Position.Line, Position.Column - 1);
+                if (Board.ValidPosition(left) && EnemyExist(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                {
+                    mat[left.Line - 1, left.Column] = true;
+                }
+                Position right = new Position(Position.Line, Position.Column + 1);
+                if (Board.ValidPosition(right) && EnemyExist(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                {
+                    mat[right.Line - 1, right.Column] = true;
+                }
+            }
+
             else
             {
                 pos.ValuesDefinition(Position.Line + 1, Position.Column);
@@ -76,6 +95,21 @@ namespace Xadrez
                 if (Board.ValidPosition(pos) && EnemyExist(pos))
                 {
                     mat[pos.Line, pos.Column] = true;
+                }
+
+                // #SpecialPlay en passant
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && EnemyExist(left) && Board.Piece(left) == Match.VulnerableEnPassant)
+                    {
+                        mat[left.Line + 1, left.Column] = true;
+                    }
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && EnemyExist(right) && Board.Piece(right) == Match.VulnerableEnPassant)
+                    {
+                        mat[right.Line = 1, right.Column] = true;
+                    }
                 }
             }
 

@@ -11,13 +11,16 @@ namespace Xadrez
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Check { get; private set; }
-        
+        public Piece VulnerableEnPassant { get; private set; }
+
+
         public XadrezMatch()
         {
             Board = new Board(8, 8);
             Turn = 1;
             CurrentPlayer = Color.Branco;
             Finished = false;
+            VulnerableEnPassant = null;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             PuttingAllPieces();
@@ -54,6 +57,25 @@ namespace Xadrez
                 Board.PutPiece(T, destinyT);
             }
 
+            // # SpecialPlay en passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == null)
+                {
+                    Position posP;
+                    if (p.Color == Color.Branco)
+                    {
+                        posP = new Position(destiny.Line + 1, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(destiny.Line - 1, destiny.Column);
+                    }
+                    capturedPiece = Board.RemovePiece(posP);
+                    Captured.Add(capturedPiece);
+                }
+            }
+
             return capturedPiece;
         }
 
@@ -68,7 +90,7 @@ namespace Xadrez
             }
             Board.PutPiece(p, origin);
 
-            //#SpecialPlay roque pequeno
+            // #SpecialPlay roque pequeno
             if (p is King && destiny.Column == origin.Column + 2)
             {
                 Position originT = new Position(origin.Line, origin.Column + 3);
@@ -77,7 +99,7 @@ namespace Xadrez
                 T.QntdMovesdecrement();
                 Board.PutPiece(T, originT);
             }
-            //#SpecialPlay roque grande
+            // #SpecialPlay roque grande
             if (p is King && destiny.Column == origin.Column - 2)
             {
                 Position originT = new Position(origin.Line, origin.Column -4);
@@ -85,6 +107,25 @@ namespace Xadrez
                 Piece T = Board.RemovePiece(destinyT);
                 T.QntdMovesdecrement();
                 Board.PutPiece(T, originT);
+            }
+
+            // #SpecialPlay en passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == VulnerableEnPassant)
+                {
+                    Piece pawn = Board.RemovePiece(destiny);
+                    Position posP;
+                    if(p.Color == Color.Branco)
+                    {
+                        posP = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destiny.Column);
+                    }
+                    Board.PutPiece(pawn, posP);
+                }
             }
         }
 
@@ -117,6 +158,22 @@ namespace Xadrez
                 Turn++;
                 ChangePlayer();
             }
+
+            Piece p = Board.Piece(destiny);
+
+            //#SpecialPlay en passant
+            if (p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
+            {
+                VulnerableEnPassant = p;
+            }
+            else
+            {
+                VulnerableEnPassant = null;
+            }
+
+
+
+
         }
 
         public void ValidateOriginPosition(Position pos)
@@ -273,14 +330,14 @@ namespace Xadrez
             PuttingNewPiece('f', 1, new Bishop(Color.Branco, Board));
             PuttingNewPiece('g', 1, new Horse(Color.Branco, Board));
             PuttingNewPiece('h', 1, new Tower(Color.Branco, Board));
-            PuttingNewPiece('a', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('b', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('c', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('d', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('e', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('f', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('g', 2, new Pawn(Color.Branco, Board));
-            PuttingNewPiece('h', 2, new Pawn(Color.Branco, Board));
+            PuttingNewPiece('a', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('b', 2, new Pawn(Color.Branco, Board,this));
+            PuttingNewPiece('c', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('d', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('e', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('f', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('g', 2, new Pawn(Color.Branco, Board, this));
+            PuttingNewPiece('h', 2, new Pawn(Color.Branco, Board, this));
 
             PuttingNewPiece('a', 8, new Tower(Color.Preto, Board));
             PuttingNewPiece('b', 8, new Horse(Color.Preto, Board));
@@ -290,14 +347,14 @@ namespace Xadrez
             PuttingNewPiece('f', 8, new Bishop(Color.Preto, Board));
             PuttingNewPiece('g', 8, new Horse(Color.Preto, Board));
             PuttingNewPiece('h', 8, new Tower(Color.Preto, Board));
-            PuttingNewPiece('a', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('b', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('c', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('d', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('e', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('f', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('g', 7, new Pawn(Color.Preto, Board));
-            PuttingNewPiece('h', 7, new Pawn(Color.Preto, Board));
+            PuttingNewPiece('a', 7, new Pawn(Color.Preto, Board,this));
+            PuttingNewPiece('b', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('c', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('d', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('e', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('f', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('g', 7, new Pawn(Color.Preto, Board, this));
+            PuttingNewPiece('h', 7, new Pawn(Color.Preto, Board, this));
 
         }
     }
